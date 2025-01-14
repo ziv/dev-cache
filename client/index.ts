@@ -1,6 +1,7 @@
 import process from "node:process";
 import { existsSync } from "node:fs";
 import client from "@xpr/jsocket/client";
+import type { WritePayload } from "../server/cache.ts";
 
 const SOCKET_PATH = `${process.env.TMPDIR}/dev-cache.sock`;
 type Reply<T> = { status: string; value: T };
@@ -29,9 +30,9 @@ export default async function wrap<T = unknown>(
     return generator();
   }
   // the request method
-  const req = async <T>(
+  const req = async <T, P = unknown>(
     action: string,
-    payload?: unknown,
+    payload?: P,
   ): Promise<Reply<T>> => {
     const res = await request(
       SOCKET_PATH,
@@ -57,9 +58,9 @@ export default async function wrap<T = unknown>(
     return res.value as T;
   }
   // miss cache
-  const value = await generator(); // does not try/catches here, let the caller handle it
+  const value = await generator(); // do not try/catches here, let the caller handle it
   // writes results to cache
-  await req<undefined>("write", {
+  await req<undefined, WritePayload<T>>("write", {
     appid,
     name,
     ppid: process.ppid ?? -1,

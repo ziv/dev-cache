@@ -4,7 +4,7 @@ const ALG = "AES-GCM";
 const KEY_LENGTH = 256;
 
 /** Input identifiers for cache keys **/
-export type KeyIdentifiers = { appid: string; ppid: string; name: string };
+export type KeyIdentifiers = { appid: string; ppid: number; name: string };
 
 /** Convert input to Deno.KvKey */
 export type CacheKeyStrategy = (keys: KeyIdentifiers) => Deno.KvKey;
@@ -27,9 +27,9 @@ type CachedItem = {
   eat: number;
 };
 
-export type WritePayload = KeyIdentifiers & {
+export type WritePayload<V = string> = KeyIdentifiers & {
   /** Cache value */
-  value: string;
+  value: V;
 
   /** Time to live, must be equal or less than `this.ttl` if `-1` use `this.ttl`. `0` is valid ttl. */
   ttl: number;
