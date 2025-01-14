@@ -1,10 +1,12 @@
 {
-  "name": "@xpr/dev-cache-client",
+  "name": "@xpr/devcache",
   "version": "0.0.0",
-  "description": "This is a Node.js client for the DevCache service",
-  "main": "index.js",
+  "type": "module",
+  "description": "A Node.js client for the DevCache service",
+  "exports": "./index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json --outDir dist && cp package*.json dist/."
+    "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/."
   },
   "keywords": [
     "dev-cache",
