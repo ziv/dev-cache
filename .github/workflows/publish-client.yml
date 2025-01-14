@@ -20,6 +20,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Create and publish npm package
-        run: cd client && npm ci && npm run build && npm run publish
+        run: cd client && npm ci && npm run build && npm run promote
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
