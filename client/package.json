@@ -1,6 +1,6 @@
 {
   "name": "@xpr/devcache",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "A Node.js client for the DevCache service",
   "exports": "./index.js",
