@@ -11,6 +11,7 @@ export default async function wrap<T = unknown>(
     appid: string,
     name: string,
     generator: () => Promise<T>,
+    ttl = -1,
     request = client as unknown as RequestFunction,
     exists = existsSync as ExistsFunction,
 ): Promise<T> {
@@ -60,6 +61,7 @@ export default async function wrap<T = unknown>(
         name,
         ppid: process.ppid ?? -1,
         value,
+        ttl,
     });
     return value;
 }

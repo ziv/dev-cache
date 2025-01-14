@@ -27,6 +27,14 @@ type CachedItem = {
   eat: number;
 };
 
+export type WritePayload = KeyIdentifiers & {
+  /** Cache value */
+  value: string;
+
+  /** Time to live, must be equal or less than `this.ttl` if `-1` use `this.ttl`. `0` is valid ttl. */
+  ttl: number;
+};
+
 export type DevCacheOptions = {
   /** AES key to encrypt/decrypt cache values */
   key: CryptoKey;
@@ -110,19 +118,24 @@ export class DevCacheDb {
    * Write cache item
    * @param ids
    * @param value
+   * @param ttl
    */
-  async write(ids: KeyIdentifiers, value: string): Promise<boolean> {
+  async write({ value, ttl, ...ids }: WritePayload): Promise<boolean> {
+    if (ttl < -1 || ttl > this.#ttl) {
+      throw new Error(`invalid ttl ${ttl}`);
+    }
     const iv = crypto.getRandomValues(new Uint8Array(12));
     const encrypted = await crypto.subtle.encrypt(
       { name: ALG, iv },
       this.#key,
       new TextEncoder().encode(value),
     );
+    const useTtl = ttl === -1 ? this.#ttl : ttl;
     await this.#kv.set(this.#cacheKey(ids), {
       iv: encodeBase64(iv),
-      eat: Date.now() + this.#ttl,
+      eat: Date.now() + useTtl,
       value: encrypted,
-      timer: setTimeout(this.remove.bind(this), this.#ttl, ids),
+      timer: setTimeout(this.remove.bind(this), useTtl, ids),
     });
     return true;
   }

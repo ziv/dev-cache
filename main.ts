@@ -1,7 +1,7 @@
 import { type Args, parseArgs } from "@std/cli/parse-args";
 import { ConsoleHandler, getLogger, setup } from "@std/log";
 import create from "@xpr/jsocket/server";
-import initDevCache, { KeyIdentifiers } from "./server/cache.ts";
+import initDevCache, { type WritePayload } from "./server/cache.ts";
 import Help from "./server/help.ts";
 import { CacheKeyStrategies, Errors, HOUR, type Incoming, SOCKET } from "./server/primitives.ts";
 import { bail, erespond, formatter, respond, safeIsSocket, safeParse, safeRemoveSync } from "./server/utils.ts";
@@ -60,7 +60,7 @@ if (import.meta.main) {
 
   create(SOCKET, async (buf: string) => {
     connection++;
-    const [parsed, incoming] = safeParse<Incoming<KeyIdentifiers & { value: string }>>(buf);
+    const [parsed, incoming] = safeParse<Incoming<WritePayload>>(buf);
     if (!parsed) {
       return erespond(Errors.ErrorParsingRequest, connection);
     }
@@ -76,7 +76,7 @@ if (import.meta.main) {
         }
       case "write":
         try {
-          await cache.write(incoming.payload, incoming.payload.value);
+          await cache.write(incoming.payload);
           return respond("ok", "data saved");
         } catch (err) {
           return erespond(Errors.ErrorWritingCache, `${err}`, connection);
