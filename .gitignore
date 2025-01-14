@@ -1,0 +1,8 @@
+.idea
+data/*
+dist
+tmp
+.DS_Store
+tls
+client/node_modules
+client/.idea

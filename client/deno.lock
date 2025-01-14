@@ -1,0 +1,87 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@std/assert@^1.0.10": "1.0.10",
+    "jsr:@std/data-structures@^1.0.6": "1.0.6",
+    "jsr:@std/fs@^1.0.9": "1.0.9",
+    "jsr:@std/internal@^1.0.5": "1.0.5",
+    "jsr:@std/path@^1.0.8": "1.0.8",
+    "jsr:@std/testing@^1.0.9": "1.0.9",
+    "npm:@tsconfig/node20@^20.1.4": "20.1.4",
+    "npm:@types/deno@2": "2.0.0",
+    "npm:@types/node@^22.10.5": "22.10.5",
+    "npm:@xpr/jsocket@0.20": "0.20.0",
+    "npm:typescript@^5.7.3": "5.7.3"
+  },
+  "jsr": {
+    "@std/assert@1.0.10": {
+      "integrity": "59b5cbac5bd55459a19045d95cc7c2ff787b4f8527c0dd195078ff6f9481fbb3",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/data-structures@1.0.6": {
+      "integrity": "76a7fd8080c66604c0496220a791860492ab21a04a63a969c0b9a0609bbbb760"
+    },
+    "@std/fs@1.0.9": {
+      "integrity": "3eef7e3ed3d317b29432c7dcb3b20122820dbc574263f721cb0248ad91bad890",
+      "dependencies": [
+        "jsr:@std/path"
+      ]
+    },
+    "@std/internal@1.0.5": {
+      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    },
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    },
+    "@std/testing@1.0.9": {
+      "integrity": "9bdd4ac07cb13e7594ac30e90f6ceef7254ac83a9aeaa089be0008f33aab5cd4",
+      "dependencies": [
+        "jsr:@std/assert",
+        "jsr:@std/data-structures",
+        "jsr:@std/fs",
+        "jsr:@std/internal",
+        "jsr:@std/path"
+      ]
+    }
+  },
+  "npm": {
+    "@tsconfig/node20@20.1.4": {
+      "integrity": "sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg=="
+    },
+    "@types/deno@2.0.0": {
+      "integrity": "sha512-O9/jRVlq93kqfkl4sYR5N7+Pz4ukzXVIbMnE/VgvpauNHsvjQ9iBVnJ3X0gAvMa2khcoFD8DSO7mQVCuiuDMPg=="
+    },
+    "@types/node@22.10.5": {
+      "integrity": "sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
+    "@xpr/jsocket@0.20.0": {
+      "integrity": "sha512-kO2TlbQIAmHFJ9r0Qi62Ft9V3F9rSwSxSgGj1UguJtbJ82ntpVq2uLsh20YwkRVkdf3HY6biLJv9gNEq/xaa2A=="
+    },
+    "typescript@5.7.3": {
+      "integrity": "sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw=="
+    },
+    "undici-types@6.20.0": {
+      "integrity": "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@^1.0.10",
+      "jsr:@std/testing@^1.0.9"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@tsconfig/node20@^20.1.4",
+        "npm:@types/deno@2",
+        "npm:@types/node@^22.10.5",
+        "npm:@xpr/jsocket@0.20",
+        "npm:typescript@^5.7.3"
+      ]
+    }
+  }
+}

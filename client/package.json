@@ -1,0 +1,26 @@
+{
+  "name": "@zoominfo/dev-cache-client",
+  "version": "0.0.0",
+  "description": "This is a Node.js client for the DevCache service",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --outDir dist && cp package*.json dist/."
+  },
+  "keywords": [
+    "dev-cache",
+    "node",
+    "nodejs",
+    "development"
+  ],
+  "author": "Zoominfo",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/deno": "^2.0.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@xpr/jsocket": "^0.20.0"
+  }
+}
