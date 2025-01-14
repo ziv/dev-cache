@@ -6,7 +6,8 @@
   "exports": "./index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/."
+    "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/.",
+    "publish": "cd dist && npm publish --access public"
   },
   "keywords": [
     "dev-cache",
