@@ -1,5 +1,5 @@
 {
-  "name": "@zoominfo/dev-cache-client",
+  "name": "@xpr/dev-cache-client",
   "version": "0.0.0",
   "description": "This is a Node.js client for the DevCache service",
   "main": "index.js",
@@ -12,7 +12,7 @@
     "nodejs",
     "development"
   ],
-  "author": "Zoominfo",
+  "author": "xpr",
   "license": "ISC",
   "devDependencies": {
     "@types/deno": "^2.0.0",

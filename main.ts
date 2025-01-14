@@ -33,9 +33,6 @@ if (import.meta.main) {
     Deno.exit(0);
   }
 
-  console.log("Zoominfo dev-cache server");
-  console.log("-------------------------");
-
   // normalize options
   // -----------------
 
