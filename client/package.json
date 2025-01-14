@@ -1,9 +1,8 @@
 {
   "name": "@xpr/devcache",
   "version": "0.1.0",
-  "type": "module",
   "description": "A Node.js client for the DevCache service",
-  "exports": "./index.js",
+  "main": "./index.js",
   "types": "index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/.",
