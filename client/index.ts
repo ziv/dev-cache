@@ -1,12 +1,19 @@
 import process from "node:process";
 import { existsSync } from "node:fs";
 import client from "@xpr/jsocket/client";
-import type { WritePayload } from "../server/cache.ts";
 
 const SOCKET_PATH = `${process.env.TMPDIR}/dev-cache.sock`;
 type Reply<T> = { status: string; value: T };
 type RequestFunction = (action: string, payload?: unknown) => Promise<string>;
 type ExistsFunction = (path: string) => boolean;
+
+type WritePayload<V> = {
+  appid: string;
+  ppid: number;
+  name: string;
+  value: V;
+  ttl: number;
+};
 
 /**
  * Wraps a generator function with a cache.
