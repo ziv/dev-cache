@@ -4,5 +4,5 @@ dist
 tmp
 .DS_Store
 tls
-client/node_modules
-client/.idea
+nodejs-client/node_modules
+nodejs-client/.idea

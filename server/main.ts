@@ -1,13 +1,23 @@
 import { type Args, parseArgs } from "@std/cli/parse-args";
 import { ConsoleHandler, getLogger, setup } from "@std/log";
+import { sprintf } from "@std/fmt/printf";
 import create from "@xpr/jsocket/server";
-import initDevCache, { type WritePayload } from "./server/cache.ts";
-import Help from "./server/help.ts";
-import { CacheKeyStrategies, Errors, HOUR, type Incoming, SOCKET } from "./server/primitives.ts";
-import { bail, erespond, formatter, respond, safeIsSocket, safeParse, safeRemoveSync } from "./server/utils.ts";
+import initDevCache, { type WritePayload } from "./cache.ts";
+import Help from "./help.ts";
+import { CacheKeyStrategies, type ErrorDescriptor, Errors, HOUR, type Incoming, SOCKET } from "./primitives.ts";
+import { formatter, safeIsSocket, safeRemoveSync } from "./utils.ts";
 
 if (import.meta.main) {
-  // setup logger
+  /** Bail out */
+  const bail = ([code, message]: ErrorDescriptor, ...args: unknown[]) => {
+    const logger = getLogger("dev-cache");
+    logger.error(sprintf(message, ...args));
+    logger.info("Check the documentation for more information: https://discoverorg.atlassian.net/wiki/x/kQCc7y4");
+    logger.info("Exiting...");
+    Deno.exit(code);
+  };
+
+  /** Logger setup */
   setup({
     handlers: { console: new ConsoleHandler("DEBUG", { formatter, useColors: false }) },
     loggers: { "dev-cache": { level: "DEBUG", handlers: ["console"] } },
@@ -56,33 +66,45 @@ if (import.meta.main) {
     logger.debug("socket already exists, removing");
     if (!safeRemoveSync(SOCKET)) bail(Errors.FailedToRemoveSocket);
   }
-  let connection = 0;
 
-  create(SOCKET, async (buf: string) => {
+  /** Match incoming request */
+  const isIncoming = (e: unknown): e is Incoming<WritePayload> => !!e && "action" in (e as Incoming);
+
+  /** Ok response */
+  const ok = (value: string) => ({ status: "ok", value });
+
+  /** Error response */
+  const error = (value: string, connection: number) => {
+    getLogger("dev-cache").error(value, connection);
+    return { status: "error", value };
+  };
+
+  /** Connection counter (debug) */
+  let connection = 0;
+  create(SOCKET, async (input) => {
     connection++;
-    const [parsed, incoming] = safeParse<Incoming<WritePayload>>(buf);
-    if (!parsed) {
-      return erespond(Errors.ErrorParsingRequest, connection);
+    if (!isIncoming(input)) {
+      return error(Errors.ErrorParsingRequest[1], connection);
     }
     logger.debug("incoming request", connection);
-    switch (incoming.action) {
+    switch (input.action) {
       case "status":
-        return respond("ok", "server is up and running");
+        return ok("server is up and running");
       case "read":
         try {
-          return respond("ok", await cache.read(incoming.payload));
+          return ok(await cache.read(input.payload));
         } catch (err) {
-          return erespond(Errors.ErrorReadingCache, `${err}`, connection);
+          return error(sprintf(Errors.ErrorReadingCache[1], err), connection);
         }
       case "write":
         try {
-          await cache.write(incoming.payload);
-          return respond("ok", "data saved");
+          await cache.write(input.payload);
+          return ok("data saved");
         } catch (err) {
-          return erespond(Errors.ErrorWritingCache, `${err}`, connection);
+          return error(sprintf(Errors.ErrorWritingCache[1], err), connection);
         }
     }
-    return erespond(Errors.UnrecognizedRequest, connection);
+    return error(Errors.UnrecognizedRequest[1], connection);
   });
   console.log("Press CTRL+C to exit");
 }

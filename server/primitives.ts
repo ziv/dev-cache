@@ -1,18 +1,10 @@
 // App types
-// import { KeyIdentifiers } from "./cache.ts";
 
-/**
- * Incoming request structure.
- */
+/** Incoming request structure */
 export type Incoming<T = unknown> = {
-  /**
-   * Action to be invoked.
-   */
+  /** Action to be invoked */
   action: string;
-
-  /**
-   * Payload to be passed to the action.
-   */
+  /** Payload to be passed to the action */
   payload: T;
 };
 
