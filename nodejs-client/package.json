@@ -5,6 +5,7 @@
   "main": "./index.js",
   "types": "index.d.ts",
   "scripts": {
+    "test": "tsx --test *test.ts",
     "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/.",
     "promote": "cd dist && npm publish --access public"
   },
@@ -17,12 +18,13 @@
   "author": "xpr",
   "license": "ISC",
   "devDependencies": {
-    "@types/deno": "^2.0.0",
     "@tsconfig/node20": "^20.1.4",
+    "@types/deno": "^2.0.0",
     "@types/node": "^22.10.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@xpr/jsocket": "^0.20.0"
+    "@xpr/jsocket": "^0.25.2"
   }
 }
