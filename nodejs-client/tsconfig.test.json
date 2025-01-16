@@ -1,11 +1,15 @@
 {
   "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
+    "declaration": true,
+    "outDir": "./dist",
     "types": [
       "node"
     ]
   },
   "include": [
-    "./*.ts"
+    "./index.ts",
+    "./appid.ts",
+    "./unique.ts"
   ]
 }
