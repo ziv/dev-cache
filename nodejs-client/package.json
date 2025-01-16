@@ -12,8 +12,7 @@
   "scripts": {
     "test": "tsx --test *test.ts",
     "prebuild": "rm -rf dist",
-    "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/.",
-    "promote": "cd dist && npm publish --access public"
+    "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/."
   },
   "keywords": [
     "dev-cache",
@@ -21,8 +20,8 @@
     "nodejs",
     "development"
   ],
-  "author": "xpr",
-  "license": "ISC",
+  "author": "Ziv Perry",
+  "license": "MIT",
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.10.5",
