@@ -12,6 +12,10 @@
     "nodejs",
     "development"
   ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=10.0.0"
+  },
   "exports": {
     ".": "./index.js",
     "./appid": "./appid.js",
