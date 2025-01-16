@@ -9,6 +9,14 @@
     "./unique": "./unique.js",
     "./appid": "./appid.js"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ziv/dev-cache.git",
+    "directory": "nodejs-client"
+  },
+  "author": "Ziv Perry",
+  "homepage": "https://github.com/ziv/dev-cache",
   "scripts": {
     "test": "tsx --test *test.ts",
     "prebuild": "rm -rf dist",
@@ -20,8 +28,6 @@
     "nodejs",
     "development"
   ],
-  "author": "Ziv Perry",
-  "license": "MIT",
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.10.5",
