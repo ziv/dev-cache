@@ -29,9 +29,7 @@
   "homepage": "https://github.com/ziv/dev-cache",
   "scripts": {
     "test": "tsx --test *test.ts",
-    "prebuild": "rm -rf dist",
-    "build": "tsc -p tsconfig.lib.json",
-    "postbuild": "cp package*.json dist/ && cp ../license dist/ && cp ../readme.md dist/"
+    "build": "rm -rf dist && tsc -p tsconfig.lib.json && cp package*.json dist/ && cp ../license dist/"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
@@ -40,7 +38,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@xpr/jsocket": "^0.26.0"
+    "@xpr/jsocket": "^0.27.6"
   },
   "release": {
     "plugins": [
