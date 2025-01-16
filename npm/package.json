@@ -1,0 +1,55 @@
+{
+  "name": "@xpr/devcache",
+  "version": "0.5.0",
+  "description": "A Node.js client for the DevCache service",
+  "main": "./index.js",
+  "author": "Ziv Perry",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "devcache",
+    "cache",
+    "nodejs",
+    "development"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./appid": "./appid.js",
+    "./unique": "./unique.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ziv/dev-cache.git",
+    "directory": "npm"
+  },
+  "homepage": "https://github.com/ziv/dev-cache",
+  "scripts": {
+    "test": "tsx --test *test.ts",
+    "prebuild": "rm -rf dist",
+    "build": "tsc -p tsconfig.lib.json",
+    "postbuild": "cp package*.json dist/ && cp ../license dist/ && cp ../readme.md dist/"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@xpr/jsocket": "^0.26.0"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist",
+          "npmPublish": true
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  }
+}
