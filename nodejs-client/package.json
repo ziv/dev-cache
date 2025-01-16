@@ -1,6 +1,6 @@
 {
   "name": "@xpr/devcache",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "A Node.js client for the DevCache service",
   "main": "./index.js",
   "types": "index.d.ts",
