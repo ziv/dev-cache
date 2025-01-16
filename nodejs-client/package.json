@@ -4,8 +4,14 @@
   "description": "A Node.js client for the DevCache service",
   "main": "./index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": "./index.js",
+    "./unique": "./unique.js",
+    "./appid": "./appid.js"
+  },
   "scripts": {
     "test": "tsx --test *test.ts",
+    "prebuild": "rm -rf dist",
     "build": "tsc -p tsconfig.json && cp package*.json dist/.&& cp readme.md dist/.",
     "promote": "cd dist && npm publish --access public"
   },
@@ -19,9 +25,8 @@
   "license": "ISC",
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
-    "@types/deno": "^2.0.0",
     "@types/node": "^22.10.5",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {

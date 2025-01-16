@@ -4,25 +4,41 @@ import { sprintf } from "@std/fmt/printf";
 import create from "@xpr/jsocket/server";
 import initDevCache, { type WritePayload } from "./cache.ts";
 import Help from "./help.ts";
-import { CacheKeyStrategies, type ErrorDescriptor, Errors, HOUR, type Incoming, SOCKET } from "./primitives.ts";
 import { formatter, safeIsSocket, safeRemoveSync } from "./utils.ts";
 
-if (import.meta.main) {
-  /** Bail out */
-  const bail = ([code, message]: ErrorDescriptor, ...args: unknown[]) => {
-    const logger = getLogger("dev-cache");
-    logger.error(sprintf(message, ...args));
-    logger.info("Check the documentation for more information: https://discoverorg.atlassian.net/wiki/x/kQCc7y4");
-    logger.info("Exiting...");
-    Deno.exit(code);
-  };
+/** Incoming request structure */
+type Incoming<T = unknown> = { action: string; payload: T };
 
+/** Constants */
+const HOUR = 60 * 60;
+const SOCKET = Deno.env.get("DEVCACHE_SOCKET") ?? `${Deno.env.get("TMPDIR")}/dev-cache.sock`;
+const CacheKeyStrategies = ["watch", "appid", "none"] as const;
+
+/** Errors */
+type ErrorDescriptor = [number, string];
+/** Errors ([code, message]) */
+const Errors: Record<string, ErrorDescriptor> = {
+  NegativeTtl: [1, "ttl must be greater than 0. got %s"],
+  TooLongTtl: [2, "ttl must be less than 7200 (2 hours). got %s"],
+  InvalidCacheKeyStrategy: [3, "invalid cache key strategy. got %s"],
+  FailedToRemoveSocket: [4, "failed to remove socket"],
+};
+
+if (import.meta.main) {
   /** Logger setup */
   setup({
     handlers: { console: new ConsoleHandler("DEBUG", { formatter, useColors: false }) },
     loggers: { "dev-cache": { level: "DEBUG", handlers: ["console"] } },
   });
   const logger = getLogger("dev-cache");
+
+  /** Bail out */
+  const bail = ([code, message]: ErrorDescriptor, ...args: unknown[]) => {
+    logger.error(sprintf(message, ...args));
+    logger.info("Check the manual for more information");
+    logger.info("Exiting...");
+    Deno.exit(code);
+  };
 
   // input
   const args = parseArgs(Deno.args, {
@@ -75,7 +91,7 @@ if (import.meta.main) {
 
   /** Error response */
   const error = (value: string, connection: number) => {
-    getLogger("dev-cache").error(value, connection);
+    logger.error(value, connection);
     return { status: "error", value };
   };
 
@@ -84,7 +100,7 @@ if (import.meta.main) {
   create(SOCKET, async (input) => {
     connection++;
     if (!isIncoming(input)) {
-      return error(Errors.ErrorParsingRequest[1], connection);
+      return error("error parsing request", connection);
     }
     logger.debug("incoming request", connection);
     switch (input.action) {
@@ -94,17 +110,17 @@ if (import.meta.main) {
         try {
           return ok(await cache.read(input.payload));
         } catch (err) {
-          return error(sprintf(Errors.ErrorReadingCache[1], err), connection);
+          return error(sprintf("error reading cache: %s", err), connection);
         }
       case "write":
         try {
           await cache.write(input.payload);
           return ok("data saved");
         } catch (err) {
-          return error(sprintf(Errors.ErrorWritingCache[1], err), connection);
+          return error(sprintf("error writing cache: %s", err), connection);
         }
     }
-    return error(Errors.UnrecognizedRequest[1], connection);
+    return error("unrecognized request", connection);
   });
   console.log("Press CTRL+C to exit");
 }

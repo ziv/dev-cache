@@ -8,6 +8,8 @@
     ]
   },
   "include": [
-    "./index.ts"
+    "./index.ts",
+    "./appid.ts",
+    "./unique.ts"
   ]
 }

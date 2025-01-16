@@ -1,8 +1,51 @@
+/**
+ * dev-cache client function
+ *
+ * It takes a generator function and wraps it
+ * with a cache in development environment only.
+ *
+ * @example usage:
+ * ```ts
+ * import wrap from "@xpr/devcache";
+ *
+ * function veryExpensiveFunction(): Promise<unknown> {
+ * }
+ *
+ * const result = await wrap("my-app",
+ *    "my-expensive-function",
+ *    () => veryExpensiveFunction()
+ * );
+ * ```
+ *
+ * @example full usage:
+ * ```ts
+ * import wrap from "@xpr/devcache";
+ * import appId from "@xpr/devcache/appid";
+ * import unique from "@xpr/devcache/unique";
+ *
+ * const input = { ... };
+ *
+ * // the original expensive call:
+ * // const results = await veryExpensiveFunction(input);
+ *
+ * // replaced with:
+ * const result = await wrap(
+ *      // (1) application identifier, can be set globally using environment variable `DEVCACHE_APPID`
+ *      appId("my-app"),
+ *      // (2) `unique` takes the generator input and provides a unique identifier for the cache key
+ *      unique(input, "secrets"),
+ *      // (3) generator function
+ *      () => veryExpensiveFunction(input),
+ *      // (4) optional ttl
+ *      60 * 10, // 10 minutes
+ * );
+ * ```
+ *
+ * @module
+ */
 import process from 'node:process';
 import { existsSync } from 'node:fs';
 import client from '@xpr/jsocket/client';
-
-const SOCKET_PATH = process.env.DEVCACHE_SOCKET ?? `${process.env.TMPDIR}/dev-cache.sock`;
 
 /** Input identifiers for cache keys **/
 type KeyIdentifiers = { appid: string; ppid: number; name: string };
@@ -15,9 +58,20 @@ type Reply<T = unknown> = { status: string; value: T };
 
 /**
  * Wraps a generator function with a cache.
+ * @param appid
+ * @param name
+ * @param generator
  */
 export default async function wrap<T = unknown>(appid: string, name: string, generator: () => Promise<T>): Promise<T>;
-/** Run time signature contain dependencies. */
+/**
+ * Wraps a generator function with a cache and custom ttl.
+ * @param appid
+ * @param name
+ * @param generator
+ * @param ttl
+ */
+export default async function wrap<T = unknown>(appid: string, name: string, generator: () => Promise<T>, ttl: number): Promise<T>;
+/** @internal runtime signature contain dependencies. */
 export default async function wrap<T = unknown>(
     appid: string,
     name: string,
@@ -33,6 +87,7 @@ export default async function wrap<T = unknown>(
     ) {
         return generator();
     }
+    const SOCKET_PATH = process.env.DEVCACHE_SOCKET ?? `${process.env.TMPDIR}/dev-cache.sock`;
     // is socket available?
     if (!exists(SOCKET_PATH)) {
         return generator();

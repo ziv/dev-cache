@@ -11,6 +11,6 @@
     "@xpr/jsocket": "jsr:@xpr/jsocket@^0.25.1"
   },
   "fmt": {
-    "lineWidth": 120
+    "lineWidth": 160
   }
 }

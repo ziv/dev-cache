@@ -1,6 +1,6 @@
-import { LogLevels, LogRecord } from '@std/log';
-import { sprintf } from '@std/fmt/printf';
-import { blue, green, red, white, yellow } from '@std/fmt/colors';
+import { LogLevels, LogRecord } from "@std/log";
+import { sprintf } from "@std/fmt/printf";
+import { blue, green, red, white, yellow } from "@std/fmt/colors";
 
 /**
  * Log formatter
@@ -27,7 +27,7 @@ export function formatter(log: LogRecord) {
  */
 export function safeIsSocket(path: string): boolean {
   try {
-    return Deno.statSync(path).isSocket ?? false;
+    return Deno.statSync(path).isSocket ?? Deno.statSync(path).isFile ?? false;
   } catch (_) {
     return false;
   }

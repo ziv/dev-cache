@@ -1,6 +1,7 @@
 name: Publish
 
 on:
+  workflow_dispatch:
   release:
     types: [ created ]
 
@@ -19,7 +20,20 @@ jobs:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Create and publish npm package
-        run: cd nodejs-client && npm ci && npm run build && npm run promote
+      - name: Install Node.js dependencies
+        working-directory: nodejs-client
+        run: npm ci
+
+      - name: Run tests
+        working-directory: nodejs-client
+        run: npm test
+
+      - name: Run build
+        working-directory: nodejs-client
+        run: npm run build
+
+      - name: Publish npm package
+        working-directory: nodejs-client/dist
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
