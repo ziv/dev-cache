@@ -29,19 +29,23 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: npm - dependencies
+      - name: dependencies
         run: npm clean-install
         working-directory: npm
 
-      - name: npm - verify
+      - name: verify
         run: npm audit signatures
         working-directory: npm
 
-      - name: npm - build
+      - name: build
         working-directory: npm
         run: npm run build
 
-      - name: npm - release
+      - name: test
+        working-directory: npm
+        run: npm test
+
+      - name: release
         run: npx semantic-release
         working-directory: npm
         env:
