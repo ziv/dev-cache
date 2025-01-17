@@ -102,17 +102,19 @@ if (import.meta.main) {
     if (!isIncoming(input)) {
       return error("error parsing request", connection);
     }
-    logger.debug("incoming request", connection);
     switch (input.action) {
       case "status":
+        logger.debug("status request", connection);
         return ok("server is up and running");
       case "read":
+        logger.debug("read request", connection);
         try {
           return ok(await cache.read(input.payload));
         } catch (err) {
           return error(sprintf("error reading cache: %s", err), connection);
         }
       case "write":
+        logger.debug("write request", connection);
         try {
           await cache.write(input.payload);
           return ok("data saved");
