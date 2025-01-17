@@ -1,0 +1,8 @@
+{
+  "name": "devcache-server",
+  "version": "0.0.0",
+  "description": "devcache server",
+  "main": "main.ts",
+  "author": "Ziv Perry",
+  "license": "MIT"
+}
