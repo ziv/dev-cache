@@ -1,6 +1,6 @@
 {
   "name": "@xpr/devcache",
-  "version": "0.5.0",
+  "version": "0.0.0",
   "description": "A Node.js client for the DevCache service",
   "main": "./index.js",
   "author": "Ziv Perry",
@@ -28,18 +28,23 @@
   },
   "homepage": "https://github.com/ziv/dev-cache",
   "scripts": {
-    "test": "tsx --test *test.ts",
-    "build": "rm -rf dist && tsc -p tsconfig.lib.json && cp package*.json dist/ && cp ../license dist/"
+    "build": "tsc",
+    "test": "node --test *test.js"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^22.10.5",
-    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@xpr/jsocket": "^0.27.6"
+    "@xpr/jsocket": "^0.27.7"
   },
+  "files": [
+    "readme.md",
+    "license",
+    "*.js",
+    "*.d.ts"
+  ],
   "release": {
     "plugins": [
       "@semantic-release/commit-analyzer",
