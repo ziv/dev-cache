@@ -7,3 +7,5 @@ tls
 node_modules
 npm/node_modules
 npm/.idea
+npm/*.js
+npm/*.d.ts

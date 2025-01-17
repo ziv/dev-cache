@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": [
-    "./index.ts",
-    "./appid.ts",
-    "./unique.ts"
-  ]
-}
