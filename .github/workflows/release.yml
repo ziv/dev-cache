@@ -28,9 +28,9 @@ jobs:
       - name: 🔑dependencies
         run: npm ci
       - name: 🍓verify
-        run: npm audit signatures -w packages/node-client
+        run: npm audit signatures -w packages/nodejs-client
       - name: 🌈build
-        run: npm run build -w packages/node-client
+        run: npm run build -w packages/nodejs-client
       - name: 🦋release
         run: npx semantic-release
         env:
