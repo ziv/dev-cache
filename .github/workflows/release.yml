@@ -24,7 +24,7 @@ jobs:
       - name: ☂️setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: "lts/18"
       - name: 🔑dependencies
         run: npm ci
       - name: 🍓verify
