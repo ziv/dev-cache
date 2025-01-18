@@ -13,7 +13,7 @@
     "./unique": "./unique.js"
   },
   "dependencies": {
-    "@xpr/jsocket": "^0.28.6"
+    "@xpr/jsocket": "^0.28.7"
   },
   "repository": {
     "type": "git",
