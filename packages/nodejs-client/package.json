@@ -1,0 +1,45 @@
+{
+  "name": "@xpr/devcache",
+  "version": "0.0.0",
+  "description": "A Node.js client for the DevCache service",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test *test.js",
+    "build": "tsc -p tsconfig.json"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./appid": "./appid.js",
+    "./unique": "./unique.js"
+  },
+  "dependencies": {
+    "@xpr/jsocket": "^0.28.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziv/dev-cache.git",
+    "directory": "packages/nodejs-client"
+  },
+  "author": "Ziv Perry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ziv/dev-cache/issues"
+  },
+  "homepage": "https://github.com/ziv/dev-cache#readme",
+  "keywords": [
+    "devcache",
+    "cache",
+    "nodejs",
+    "development"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=10.0.0"
+  },
+  "files": [
+    "readme.md",
+    "license",
+    "*.js",
+    "*.d.ts"
+  ]
+}

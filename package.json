@@ -1,0 +1,30 @@
+{
+  "name": "xpr-devcache",
+  "version": "0.0.0",
+  "description": "simple development cache",
+  "author": "Ziv Perry",
+  "license": "MIT",
+  "workspaces": [
+    "packages/nodejs-client",
+    "packages/server"
+  ],
+  "devDependencies": {
+    "@semantic-release/exec": "^6.0.3",
+    "semantic-release": "^24.2.1",
+    "typescript": "^5.7.3"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false,
+          "pkgRoot": "packages/nodejs-client"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  }
+}

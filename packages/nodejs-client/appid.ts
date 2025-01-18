@@ -15,12 +15,12 @@
  *
  * @module
  */
-import process from 'node:process';
+import process from "node:process";
 
 /**
  * Get the application identifier
  * @param value fallback application id
  */
 export default function appid(value: string) {
-    return process.env.DEVCACHE_APPID ?? value;
+  return process.env.DEVCACHE_APPID ?? value;
 }
