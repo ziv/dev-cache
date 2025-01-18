@@ -14,7 +14,7 @@
  *
  * @module
  */
-import { hash } from "node:crypto";
+import { createHash } from "node:crypto";
 
 /**
  * Generate a unique key for a given sid.
@@ -31,5 +31,10 @@ export default function unique(sid: unknown): string;
 export default function unique(sid: unknown, name: string): string;
 /** @internal runtime signature */
 export default function unique(sid: unknown, name = "default") {
-  return hash("sha1", JSON.stringify({ name, sid }));
+  /**
+   * Hash function to generate a unique key.
+   */
+  const hash = createHash('sha256');
+  hash.update(JSON.stringify({ name, sid }));
+  return hash.digest('hex');
 }
