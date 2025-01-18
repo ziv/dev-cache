@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, type Mock, mock, test } from "node:test";
 import assert from "node:assert";
-import request from "./index";
+import request from "./wrap";
 
 const OK = { status: "ok", value: "test" };
 const ERR = { status: "error", value: "test" };
